@@ -9,7 +9,11 @@ public class ArcherTower : MonoBehaviour
 
     // Fields
     [SerializeField] private float radius;
-    List<EnemyController> enemyList;
+    [SerializeField] private float damage;
+    [SerializeField] private float fireRate;
+
+    private bool readyToFire = true;
+    private List<EnemyController> enemyList;
 
     private void Start()
     {
@@ -21,7 +25,14 @@ public class ArcherTower : MonoBehaviour
 
     private void Update()
     {
-        
+        Fire();
+    }
+
+    private void Fire()
+    {
+        if (enemyList.Count == 0 || !readyToFire) return;
+
+        StartCoroutine(DamageCoroutine());
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -38,5 +49,25 @@ public class ArcherTower : MonoBehaviour
         EnemyController controller = collision.gameObject.GetComponent<EnemyController>();
 
         enemyList.Remove(controller);
+    }
+
+    IEnumerator DamageCoroutine ()
+    {
+        if(enemyList.Count > 0)
+        {
+            while (enemyList.Count > 0 && enemyList[0] == null) enemyList.RemoveAt(0);
+
+            enemyList[0].ApplyDamage(damage, health =>
+            {
+                if(health <= 0)
+                {
+                    enemyList.RemoveAt(0);
+                }
+            });
+        }
+
+        readyToFire = false;
+        yield return new WaitForSeconds(1 / fireRate);
+        readyToFire = true;
     }
 }

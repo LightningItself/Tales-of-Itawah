@@ -1,44 +1,70 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [Header("Settings")]
-    [SerializeField] private int enemyCount = 10;
+    [SerializeField] private List<GameObject> enemyPrefabs;
+    [SerializeField] private List<int> enemyIndex;
+    [SerializeField] private List<int> enemyGroupSize;
+    [SerializeField] private List<float> enemySpawnDelay;
 
-    [Header("Fixed Delay")]
-    [SerializeField] private float delayBtwSpawns;
+    [SerializeField] private float groupSpawnDelay;
+    [SerializeField] private float offsetRadius;
 
-    private float _spawnTimer;
-    private int _enemiesSpawned;
+    private int currentGroup;
+    private int totalGroups;
+    
 
-    private ObjectPooler _pooler;
+    private bool spawning = true;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        _pooler = GetComponent<ObjectPooler>();
+        totalGroups = enemyIndex.Count;
+        currentGroup = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        _spawnTimer -= Time.deltaTime;
-        if(_spawnTimer < 0)
-        {
-            _spawnTimer = delayBtwSpawns;
-            if(_enemiesSpawned < enemyCount)
-            {
-                _enemiesSpawned++;
-                SpawnEnemy();
-            }
-        }
+        // Spawn
+        SpawnEnemy();
     }
 
     private void SpawnEnemy()
     {
-        GameObject newInstance = _pooler.GetInstanceFromPool();
-        newInstance.SetActive(true);
+        if (currentGroup >= totalGroups || !spawning || enemyPrefabs.Count == 0) return;
+
+        StartCoroutine(SpawnCoroutine());
     }
+
+    IEnumerator SpawnCoroutine()
+    {
+        int enemyPrefabIndex = enemyIndex[currentGroup];
+        float spawnDelay = enemySpawnDelay[currentGroup];
+        int groupSize = enemyGroupSize[currentGroup];
+
+        Vector2 offset = Random.insideUnitCircle * Random.Range(0, offsetRadius);
+
+        Vector3 instantiationPosition = transform.position + new Vector3(offset.x, offset.y, 0);
+        GameObject enemy = Instantiate(enemyPrefabs[enemyPrefabIndex], instantiationPosition, Quaternion.identity);
+        enemy.GetComponent<EnemyController>().SpawnOffset = offset;
+
+        groupSize--;
+
+        enemyGroupSize[currentGroup] = groupSize;
+
+        spawning = false;
+        if (groupSize == 0)
+        {
+            currentGroup++;
+            yield return new WaitForSeconds(groupSpawnDelay);
+        }
+        else
+        {
+            yield return new WaitForSeconds(spawnDelay);
+        }
+        spawning = true;
+    }
+
 }
