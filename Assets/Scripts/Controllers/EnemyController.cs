@@ -8,6 +8,7 @@ public class EnemyController : MonoBehaviour
     // Components
     private List<Vector2> waypoints;
     private SpriteRenderer sprite_renderer;
+    private Rigidbody2D rb;
 
     [SerializeField] private Image healthBar;
 
@@ -42,6 +43,9 @@ public class EnemyController : MonoBehaviour
         totalNodes = waypoints.Count;
         currentNode = 0;
 
+        // Rigidbody
+        rb = GetComponent<Rigidbody2D>();
+
         // Sprite Renderer
         sprite_renderer = GetComponent<SpriteRenderer>();
 
@@ -50,14 +54,17 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        // Movement
-        Movement();
-
         // Waypoints
         UpdateWayPoints();
 
         // Update Health bar
         UpdateHealthBar();
+    }
+
+    private void FixedUpdate()
+    {
+        // Movement
+        Movement();
     }
 
     private void Movement()
@@ -76,7 +83,7 @@ public class EnemyController : MonoBehaviour
         }
 
         // Move the game object
-        transform.Translate(dir * Time.deltaTime * speed);
+        rb.MovePosition(rb.position + dir * Time.deltaTime * speed);
     }
 
     private void UpdateWayPoints()
