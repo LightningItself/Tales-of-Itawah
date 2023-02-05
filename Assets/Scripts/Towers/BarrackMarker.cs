@@ -17,4 +17,22 @@ public class BarrackMarker : MonoBehaviour
     {
         transform.position = bk.MarkerPosition;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Enemy")) return;
+
+        EnemyEngager enemy = collision.GetComponent<EnemyEngager>();
+
+        enemy.AddRange(bk.Code);
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Enemy")) return;
+
+        EnemyEngager enemy = collision.GetComponent<EnemyEngager>();
+
+        enemy.RemoveRange(bk.Code);
+    }
 }

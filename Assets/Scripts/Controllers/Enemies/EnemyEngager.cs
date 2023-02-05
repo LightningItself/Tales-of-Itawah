@@ -5,34 +5,42 @@ using UnityEngine;
 public class EnemyEngager : MonoBehaviour
 {
     private EnemyController par;
+    private List<int> ranges;
+    private List<TroopEngager> targets;
 
-    public int AttackerCount { get; private set; }
-    public TroopEngager Target { get; set; }
+    public int AttackerCount { get { return targets.Count; } }
+    public TroopEngager Target { get { return targets.Count == 0 ? null : targets[0]; } }
+
 
     //Debug
     public float attackerCount;
+    public List<int> _ranges;
+    public List<TroopEngager> _targets;
 
     private void Start()
     {
         par = GetComponentInParent<EnemyController>();
+        ranges = new List<int>();
+        targets = new List<TroopEngager>();
     }
 
     private void Update()
     {
         attackerCount = AttackerCount;
+        _ranges = ranges;
+        _targets = targets;
     }
 
-    public void OnEngage(TroopEngager troop)
+    public void Engage(TroopEngager troop)
     {   
-        AttackerCount++;
-        Target = troop;
-        troop.OnEngage(this);
+        targets.Add(troop);
+        troop.Engage(this);
         par.OnEngage();
     }
 
-    public void OnDisengage()
+    public void Disengage(TroopEngager troop)
     {
-        AttackerCount--;
+        targets.Remove(troop);
     }
 
     public void OnBeginBattle()
@@ -40,4 +48,22 @@ public class EnemyEngager : MonoBehaviour
         par.OnBeginBattle();
     }
 
+    public void AddRange(int code)
+    {
+        ranges.Add(code);
+    }
+
+    public void RemoveRange(int code)
+    {
+        ranges.Remove(code);
+    }
+
+    public bool FindRange(int code)
+    {
+        foreach (int range in ranges)
+        {
+            if (range == code) return true;
+        }
+        return false;
+    }
 }

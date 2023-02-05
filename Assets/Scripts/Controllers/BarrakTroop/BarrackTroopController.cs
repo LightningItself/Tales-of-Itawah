@@ -15,11 +15,14 @@ public class BarrackTroopController : MonoBehaviour
     public Vector2 Position { get { return new Vector2(rb.position.x, rb.position.y); } }
     public Vector2 Offset { get; set; }
     public Barrack Barrack { get; set; }
+    public int TroopNumber { get; set; }
+    public int BarrackCode { get; set; }
 
     [SerializeField] private float speed;
     [SerializeField] private float rangeRadius;
 
-    private bool isBattling = false;
+    public bool isBattling = false;
+    public bool hasReachedMarkerOnce = false;
 
     // Debug
     public EnemyEngager target;
@@ -34,6 +37,7 @@ public class BarrackTroopController : MonoBehaviour
         attacker = GetComponent<Attacker>();
 
         range.radius = rangeRadius;
+        hasReachedMarkerOnce = false;
     }
 
     private void Update()
@@ -82,7 +86,7 @@ public class BarrackTroopController : MonoBehaviour
 
         if(engager.Target == null)
         {
-            MoveTowards(Target);
+            hasReachedMarkerOnce = MoveTowards(Target) || hasReachedMarkerOnce;
         }
         else
         {
@@ -123,7 +127,7 @@ public class BarrackTroopController : MonoBehaviour
     {
         EnemyEngager newEnemy = collision.GetComponent<EnemyEngager>();
 
-        if (newEnemy == null || !newEnemy.CompareTag("Enemy")) return;
+        if (newEnemy == null || !newEnemy.CompareTag("Enemy") || !newEnemy.FindRange(BarrackCode) || !hasReachedMarkerOnce) return;
         Debug.Log("Enter");
 
         EnemyEngager targetEnemy = engager.Target;
@@ -137,14 +141,34 @@ public class BarrackTroopController : MonoBehaviour
 
     private void SetTargetEnemy(EnemyEngager target)
     {
-        if (engager.Target != null) engager.Target.OnDisengage();
-        target.OnEngage(engager);
-        engager.Target = target;
+
+        if (engager.Target != null)
+        {
+            engager.Target.Disengage(engager);
+        }
+
+        target.Engage(engager);
+        engager.Engage(target);
         isBattling = false;
     }
 
     public void OnEngage()
     {
         Debug.Log(engager.Target.name);
+    }
+
+    private void OnDestroy()
+    {
+        Barrack.DecreaseCurrentTroopCount(TroopNumber);
+        if(engager.Target != null) engager.Target.Disengage(engager);
+    }
+
+    private void MarkerChanged()
+    {
+        hasReachedMarkerOnce = false;
+        isBattling = false;
+        Debug.Log("Marker Change");
+        if(engager.Target != null) engager.Target.Disengage(engager);
+        engager.Disengage();
     }
 }

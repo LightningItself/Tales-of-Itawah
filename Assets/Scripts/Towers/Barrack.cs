@@ -15,24 +15,18 @@ public class Barrack : MonoBehaviour
     [SerializeField] private int barrackTroopCount;
     [SerializeField] private float spawnDelay;
     [SerializeField] private float hoardRadius;
+    [SerializeField] private float hoardInfluenceRadius;
+    [SerializeField] private int code;
 
-    private int currentTroopCount = 0;
     private bool hovered;
     private bool spawning = true;
     private Vector3 spawnerPosition;
+    private Stack<int> troopsToBeSpawnwed;
 
     public Vector3 MarkerPosition { get; private set; }
     public bool Selected { get; private set; }
     public float InfluenceRangeRadius { get { return influenceRangeRadius; } }
-
-    private Vector2 SqawnOffsetDir
-    {
-        get
-        {
-            float angle = currentTroopCount * 2f * Mathf.PI / barrackTroopCount;
-            return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
-        }
-    }
+    public int Code { get { return code; } }
 
     // Start is called before the first frame update
     private void Start()
@@ -43,7 +37,16 @@ public class Barrack : MonoBehaviour
 
         bm = GetComponentInChildren<BarrackMarker>();
 
+        bm.GetComponent<CircleCollider2D>().radius = hoardInfluenceRadius;
+
         spawnerPosition = Spawner.transform.position;
+        MarkerPosition = spawnerPosition;
+
+        troopsToBeSpawnwed = new Stack<int>();
+        for(int i = 0; i < barrackTroopCount; i++)
+        {
+            troopsToBeSpawnwed.Push(i);
+        }
     }
 
     private void Update()
@@ -79,35 +82,45 @@ public class Barrack : MonoBehaviour
             Vector2 worldPos2D = new(worldPos.x, worldPos.y);
 
             MarkerPosition = worldPos2D;
+
+            this.BroadcastMessage("MarkerChanged");
         }
     }
 
     private void SpawnTroop()
     {
-        if (!spawning || currentTroopCount >= barrackTroopCount) return;
+        if (!spawning || troopsToBeSpawnwed.Count == 0) return;
 
         StartCoroutine(SpawnTroopCoroutine());
     }
 
+    private Vector2 SpawnOffsetDir(int troopNumber)
+    {    
+        float angle = troopNumber * 2f * Mathf.PI / barrackTroopCount;
+        return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+    }
+
     IEnumerator SpawnTroopCoroutine()
     {
+        spawning = false;
+        yield return new WaitForSeconds(spawnDelay);
+        spawning = true;
+
         // Instantiate
         GameObject troop = Instantiate(BarrakTroopPrefab, spawnerPosition, Quaternion.identity);
+        troop.transform.SetParent(transform);
 
         // Initialize
-        Vector2 offset = SqawnOffsetDir * hoardRadius;
+        Vector2 offset = SpawnOffsetDir(troopsToBeSpawnwed.Peek()) * hoardRadius;
 
         BarrackTroopController controller = troop.GetComponent<BarrackTroopController>();
         controller.Target = bm.transform;
         controller.Offset = offset;
         controller.Barrack = this;
+        controller.BarrackCode = code;
+        controller.TroopNumber = troopsToBeSpawnwed.Peek();
 
-
-        currentTroopCount++;
-
-        spawning = false;
-        yield return new WaitForSeconds(spawnDelay);
-        spawning = true;
+        troopsToBeSpawnwed.Pop();
     }
 
     private void OnMouseEnter()
@@ -120,8 +133,8 @@ public class Barrack : MonoBehaviour
         hovered = false; 
     }
 
-    public void DecreaseCurrentTroopCount()
+    public void DecreaseCurrentTroopCount(int troopNumber)
     {
-        currentTroopCount--;
+        troopsToBeSpawnwed.Push(troopNumber);
     }
 }
