@@ -6,18 +6,17 @@ public class ArcherTower : MonoBehaviour
 {
     // Components
     private CircleCollider2D col;
+    private ITowerAttackManager attackManager;
 
     // Fields
     [SerializeField] private float radius;
-    [SerializeField] private float damage;
-    [SerializeField] private float fireRate;
 
-    private bool readyToFire = true;
     private List<Damagable> enemyList;
 
     private void Start()
     {
         col = GetComponent<CircleCollider2D>();
+        attackManager = GetComponent<ITowerAttackManager>();
         col.radius = radius;
 
         enemyList = new List<Damagable>();
@@ -25,21 +24,14 @@ public class ArcherTower : MonoBehaviour
 
     private void Update()
     {
-        Fire();
-    }
-
-    private void Fire()
-    {
-        if (enemyList.Count == 0 || !readyToFire) return;
-
-        StartCoroutine(DamageCoroutine());
+        attackManager.Attack();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Damagable enemy = collision.gameObject.GetComponent<Damagable>();
 
-        enemyList.Add(enemy);
+        attackManager.AddEnemy(enemy);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -48,20 +40,6 @@ public class ArcherTower : MonoBehaviour
 
         Damagable enemy = collision.gameObject.GetComponent<Damagable>();
 
-        enemyList.Remove(enemy);
-    }
-
-    IEnumerator DamageCoroutine ()
-    {
-        if(enemyList.Count > 0)
-        {
-            while (enemyList.Count > 0 && enemyList[0] == null) enemyList.RemoveAt(0);
-
-            enemyList[0].ApplyDamage(damage);
-        }
-
-        readyToFire = false;
-        yield return new WaitForSeconds(1 / fireRate);
-        readyToFire = true;
+        attackManager.RemoveEnemy(enemy);
     }
 }
