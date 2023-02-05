@@ -19,12 +19,10 @@ public class BarrackRange : MonoBehaviour
     private void OnMouseEnter()
     {
         Hovered = true;
-        Debug.Log("hovered");
     }
 
     private void OnMouseExit()
     {
         Hovered = false;
-        Debug.Log("Exit");
     }
 }

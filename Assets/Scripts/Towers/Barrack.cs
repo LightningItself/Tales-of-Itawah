@@ -25,6 +25,15 @@ public class Barrack : MonoBehaviour
     public bool Selected { get; private set; }
     public float InfluenceRangeRadius { get { return influenceRangeRadius; } }
 
+    private Vector2 SqawnOffsetDir
+    {
+        get
+        {
+            float angle = currentTroopCount * 2f * Mathf.PI / barrackTroopCount;
+            return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+        }
+    }
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -67,7 +76,7 @@ public class Barrack : MonoBehaviour
         if (Selected && prevSelected)
         {
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 worldPos2D = new Vector2(worldPos.x, worldPos.y);
+            Vector2 worldPos2D = new(worldPos.x, worldPos.y);
 
             MarkerPosition = worldPos2D;
         }
@@ -86,11 +95,12 @@ public class Barrack : MonoBehaviour
         GameObject troop = Instantiate(BarrakTroopPrefab, spawnerPosition, Quaternion.identity);
 
         // Initialize
-        Vector2 offset = Random.insideUnitCircle * Random.Range(hoardRadius / 1.5f, hoardRadius);
+        Vector2 offset = SqawnOffsetDir * hoardRadius;
 
         BarrackTroopController controller = troop.GetComponent<BarrackTroopController>();
         controller.Target = bm.transform;
         controller.Offset = offset;
+        controller.Barrack = this;
 
 
         currentTroopCount++;
@@ -108,5 +118,10 @@ public class Barrack : MonoBehaviour
     private void OnMouseExit()
     {
         hovered = false; 
+    }
+
+    public void DecreaseCurrentTroopCount()
+    {
+        currentTroopCount--;
     }
 }

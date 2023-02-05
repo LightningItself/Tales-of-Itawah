@@ -7,18 +7,20 @@ public class EnemyController : MonoBehaviour
 {
     // Components
     private List<Vector2> waypoints;
-    private SpriteRenderer sprite_renderer;
+    private SpriteRenderer spriteRender;
     private Rigidbody2D rb;
-
-    [SerializeField] private Image healthBar;
+    private EnemyEngager engager;
+    private Attacker attacker;
 
     // Fields
     [SerializeField] private float speed = 2.0f;
-    [SerializeField] private float maxHealth = 50.0f;
-    [SerializeField] private float health = 50.0f;
+    [SerializeField] private float damage;
+    [SerializeField] private float attackRate;
 
     private int currentNode;
     private int totalNodes;
+
+    private bool isBattling = false;
 
     public Vector2 SpawnOffset { get; set; }
 
@@ -27,6 +29,9 @@ public class EnemyController : MonoBehaviour
     {
         get { return new Vector2(transform.position.x, transform.position.y); }
     }
+
+    // Debug
+    public TroopEngager target;
 
     private void Start()
     {
@@ -43,28 +48,54 @@ public class EnemyController : MonoBehaviour
         totalNodes = waypoints.Count;
         currentNode = 0;
 
-        // Rigidbody
-        rb = GetComponent<Rigidbody2D>();
-
-        // Sprite Renderer
-        sprite_renderer = GetComponent<SpriteRenderer>();
-
         
+        rb = GetComponent<Rigidbody2D>();
+        spriteRender = GetComponent<SpriteRenderer>();
+        engager = GetComponent<EnemyEngager>();
+        attacker = GetComponent<Attacker>();
     }
 
     private void Update()
     {
+        target = engager.Target;
+
         // Waypoints
         UpdateWayPoints();
 
-        // Update Health bar
-        UpdateHealthBar();
+        // Check Engager
+        CheckEngager();
+
+        // Attack
+        if (isBattling)
+        {
+            Attack();
+        }
+    }
+
+    private void CheckEngager()
+    {
+        if (engager.Target == null)
+        {
+            isBattling = false;
+        }
     }
 
     private void FixedUpdate()
     {
         // Movement
-        Movement();
+        if (!isBattling)
+        {
+            Movement();
+        }
+    }
+
+    private void Attack()
+    {
+        if (engager.Target == null) return;
+
+        Damagable troop = engager.Target.GetComponent<Damagable>();
+
+        attacker.Attack(troop);
     }
 
     private void Movement()
@@ -75,11 +106,11 @@ public class EnemyController : MonoBehaviour
 
         if (dir.x < -0.01)
         {
-            sprite_renderer.flipX = true;
+            spriteRender.flipX = true;
         }
         else if (dir.x > 0.01)
         {
-            sprite_renderer.flipX = false;
+            spriteRender.flipX = false;
         }
 
         // Move the game object
@@ -101,19 +132,13 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void UpdateHealthBar()
+    public void OnEngage()
     {
-        healthBar.fillAmount = health / maxHealth;
-        if(health <= 0)
-        {
-            Destroy(gameObject);
-        }
+        Debug.Log(engager.Target.name);
     }
 
-    public void ApplyDamage(float d, System.Action<float> callback)
+    public void OnBeginBattle()
     {
-        health -= d;
-        callback(health);
+        isBattling = true;
     }
-
 }

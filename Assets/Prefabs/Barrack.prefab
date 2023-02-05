@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1348463254
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1348463255}
+  m_Layer: 7
+  m_Name: Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1348463255
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348463254}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.04, y: -1.11, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 165695021530880837}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &165695021530880842
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,7 +43,7 @@ GameObject:
   - component: {fileID: 165695021530880836}
   - component: {fileID: 165695021530880843}
   - component: {fileID: 165695021530880838}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrack
   m_TagString: Tower
   m_Icon: {fileID: 0}
@@ -26,13 +57,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 165695021530880842}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.3647616, y: -1.4941807, z: 0.08072412}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 165695022608498432}
   - {fileID: 165695021768190352}
+  - {fileID: 1348463255}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -101,8 +133,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   influenceRangeRadius: 4
-  hovered: 0
-  selected: 0
+  Spawner: {fileID: 1348463255}
+  BarrakTroopPrefab: {fileID: 1303555252547191630, guid: 0198bc486e08649848a8662b36e810d0, type: 3}
+  barrackTroopCount: 3
+  spawnDelay: 1
+  hoardRadius: 0.5
 --- !u!61 &165695021530880838
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -140,7 +175,7 @@ GameObject:
   - component: {fileID: 165695021768190352}
   - component: {fileID: 165695021768190354}
   - component: {fileID: 165695021768190353}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Marker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -238,7 +273,7 @@ GameObject:
   - component: {fileID: 165695022608498439}
   - component: {fileID: 165695022608498433}
   - component: {fileID: 165695022608498434}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}

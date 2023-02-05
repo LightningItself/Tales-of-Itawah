@@ -1,5 +1,66 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &559344553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 559344554}
+  - component: {fileID: 559344555}
+  - component: {fileID: 559344556}
+  m_Layer: 2
+  m_Name: Range
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &559344554
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559344553}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2622319630269069833}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &559344555
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559344553}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
+--- !u!114 &559344556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559344553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 684dd288e511a46cf93210fe21d794cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1303555252547191630
 GameObject:
   m_ObjectHideFlags: 0
@@ -13,7 +74,10 @@ GameObject:
   - component: {fileID: 1435942084}
   - component: {fileID: 1435942083}
   - component: {fileID: 3621576080897798595}
-  m_Layer: 0
+  - component: {fileID: 1435942086}
+  - component: {fileID: 7116291727508836699}
+  - component: {fileID: 5026479575030284580}
+  m_Layer: 2
   m_Name: BarrackTroop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,11 +92,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1303555252547191630}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.76, y: -1.78, z: 0}
+  m_LocalPosition: {x: -0.76, y: -1.78, z: 1}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 238859479835767473}
+  - {fileID: 559344554}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -147,7 +212,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676eacd38736f48e68d39bc48a0efc23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 3
+  rangeRadius: 1
+  target: {fileID: 0}
+--- !u!114 &1435942086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1303555252547191630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d3b7b05d32ef4b1ab9cf294d0574e69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7116291727508836699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1303555252547191630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50c70f3431229441fac4a7f85053a766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 3983772290646833469}
+  maxHealth: 50
+  health: 50
+--- !u!114 &5026479575030284580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1303555252547191630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2412f39c8c124054bc81ae9cf278771, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  attackRate: 1.5
 --- !u!1 &6096117044583861592
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,7 +267,7 @@ GameObject:
   - component: {fileID: 3012947435049056368}
   - component: {fileID: 222815538598551162}
   - component: {fileID: 7818152886945127207}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,7 +344,7 @@ GameObject:
   - component: {fileID: 7221958756744918202}
   - component: {fileID: 8812046470454785344}
   - component: {fileID: 3983772290646833469}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Healthbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -313,7 +421,7 @@ GameObject:
   - component: {fileID: 7001614100697326124}
   - component: {fileID: 2986525809513264899}
   - component: {fileID: 3520628187387917275}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: HealthCanvas (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
