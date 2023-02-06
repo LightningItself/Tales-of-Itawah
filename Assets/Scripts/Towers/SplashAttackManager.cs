@@ -51,6 +51,7 @@ public class SplashAttackManager : MonoBehaviour, ITowerAttackManager
         proj.Damage = damage;
         proj.SplashRadius = splashRadius;
         proj.Speed = (target - new Vector2(transform.position.x, transform.position.y)).magnitude;
+        //proj.SetCollider();
 
         isAttacking = false;
         yield return new WaitForSeconds(1 / fireRate);

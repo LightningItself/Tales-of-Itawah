@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3317767227892574310}
   m_Layer: 2
   m_Name: Healthbar
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -265,6 +265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackerCount: 0
   _ranges: 
+  _targets: []
 --- !u!114 &2096662106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,7 +309,7 @@ GameObject:
   - component: {fileID: 3317767228772833949}
   m_Layer: 2
   m_Name: HealthCanvas
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -408,7 +409,7 @@ GameObject:
   - component: {fileID: 3317767229168177656}
   m_Layer: 2
   m_Name: Container
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

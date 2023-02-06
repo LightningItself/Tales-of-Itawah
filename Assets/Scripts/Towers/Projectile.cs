@@ -11,20 +11,26 @@ public class Projectile : MonoBehaviour
 
     private Vector2 Position { get { return new Vector2(transform.position.x, transform.position.y); } }
 
+    private CircleCollider2D col;
+    private List<Damagable> enemies;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        col = GetComponent<CircleCollider2D>();
+        enemies = new List<Damagable>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        col.radius = SplashRadius;
+
         // Move
         Move();
 
         // Destroy Check
-        CheckDestroy();
+        CheckHit();
 
     }
 
@@ -36,11 +42,27 @@ public class Projectile : MonoBehaviour
         transform.Translate(dir * Speed * Time.deltaTime);
     }
 
-    private void CheckDestroy()
+    private void CheckHit()
     {
         if((Position - Target).magnitude <= 0.1)
         {
+            
+            foreach(Damagable e in enemies)
+            {
+                if(e != null)
+                {
+                    e.ApplyDamage(Damage);
+                }
+            }
+
             Destroy(gameObject);
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Enemy")) return;
+
+        enemies.Add(collision.GetComponent<Damagable>());
     }
 }
