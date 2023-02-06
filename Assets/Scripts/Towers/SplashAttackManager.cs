@@ -9,6 +9,7 @@ public class SplashAttackManager : MonoBehaviour, ITowerAttackManager
     [SerializeField] private float fireRate;
     [SerializeField] private float damage;
     [SerializeField] private float splashRadius;
+    [SerializeField] private float zSpeed;
 
     private List<Damagable> enemyList;
 
@@ -50,7 +51,9 @@ public class SplashAttackManager : MonoBehaviour, ITowerAttackManager
         proj.Target = target;
         proj.Damage = damage;
         proj.SplashRadius = splashRadius;
-        proj.Speed = (target - new Vector2(transform.position.x, transform.position.y)).magnitude;
+        proj.Speed = (target - new Vector2(transform.position.x, transform.position.y)).magnitude / fireDuration;
+        proj.ZSpeed = zSpeed;
+        proj.ZAccel = 2 * zSpeed / fireDuration;
         //proj.SetCollider();
 
         isAttacking = false;
