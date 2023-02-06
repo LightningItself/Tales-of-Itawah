@@ -29,6 +29,8 @@ public class ArcherTower : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!collision.CompareTag("Enemy")) return;
+
         Damagable enemy = collision.gameObject.GetComponent<Damagable>();
 
         attackManager.AddEnemy(enemy);
@@ -36,7 +38,7 @@ public class ArcherTower : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log(collision.gameObject.tag);
+        if (!collision.CompareTag("Enemy")) return;
 
         Damagable enemy = collision.gameObject.GetComponent<Damagable>();
 

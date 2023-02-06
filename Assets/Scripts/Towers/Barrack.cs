@@ -83,7 +83,7 @@ public class Barrack : MonoBehaviour
 
             MarkerPosition = worldPos2D;
 
-            this.BroadcastMessage("MarkerChanged");
+            BroadcastMessage("MarkerChanged");
         }
     }
 

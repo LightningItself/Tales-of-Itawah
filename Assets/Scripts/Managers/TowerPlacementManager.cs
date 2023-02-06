@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class TowerPlacementManager : MonoBehaviour
 {
-    [SerializeField] List<GameObject> Towers;
-    [SerializeField] List<GameObject> TowerMarkers;
+    [SerializeField] private Camera cam;
+    [SerializeField] private List<GameObject> Towers;
+    [SerializeField] private List<GameObject> TowerMarkers;
+    [SerializeField] private GameObject TowerSelector;
 
     private GameObject selectedTower;
     private GameObject selectedTowerMarker;
@@ -20,19 +22,46 @@ public class TowerPlacementManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if(selectedTowerMarker != null)
         {
-            if (selected != 0)
-            {
-                selected = 0;
-                //
-            }
+            Vector3 towerPos = cam.ScreenToWorldPoint(Input.mousePosition);
+            towerPos.z = -3;
+            selectedTowerMarker.transform.position = towerPos;
         }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            Select(-1);
+            TowerSelector.SetActive(!TowerSelector.activeSelf);
+        }
+
+        if (Input.GetMouseButtonDown(0) && selected > -1)
+        {
+            Vector3 towerPos = cam.ScreenToWorldPoint(Input.mousePosition);
+            Instantiate(Towers[selected], new Vector3(towerPos.x, towerPos.y, -1), Quaternion.identity);
+            Select(-1);
+            TowerSelector.SetActive(!TowerSelector.activeSelf);
+        }
+    }
+
+    public void Select(int newSelected)
+    {
+        selected = newSelected;
 
         if (selected == -1)
         {
-            if (selectedTower != null) Destroy(selectedTower);
-            selectedTower = null;
+            Destroy(selectedTowerMarker);
+            return;
         }
+
+        selectedTower = Towers[selected];
+
+        if (selectedTowerMarker != null)
+        {
+            Destroy(selectedTowerMarker);
+        }
+    
+        selectedTowerMarker = Instantiate(TowerMarkers[selected], cam.ScreenToWorldPoint(Input.mousePosition), Quaternion.identity);
+        
     }
 }
