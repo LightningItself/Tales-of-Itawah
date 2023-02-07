@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 165695021530880836}
   - component: {fileID: 165695021530880843}
   - component: {fileID: 165695021530880838}
+  - component: {fileID: 9173301562939259106}
   m_Layer: 8
   m_Name: Barrack
   m_TagString: Tower
@@ -59,7 +60,7 @@ Transform:
   m_GameObject: {fileID: 165695021530880842}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.3647616, y: -1.4941807, z: 0.08072412}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 165695022608498432}
@@ -109,8 +110,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.19833037, g: 0.8867924, b: 0, a: 1}
+  m_Sprite: {fileID: -601367520, guid: 07ec0cb464b7ec84fb1bb052dac0c0dc, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -137,7 +138,7 @@ MonoBehaviour:
   BarrakTroopPrefab: {fileID: 1303555252547191630, guid: 0198bc486e08649848a8662b36e810d0, type: 3}
   barrackTroopCount: 3
   spawnDelay: 1
-  hoardRadius: 0.5
+  hoardRadius: 0.32
   hoardInfluenceRadius: 1.5
   code: 0
 --- !u!61 &165695021530880838
@@ -157,7 +158,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 4, y: 4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -166,6 +167,26 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!95 &9173301562939259106
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165695021530880842}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ecf1fb1467bc1444591300c44f9af4bc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &165695021768190359
 GameObject:
   m_ObjectHideFlags: 0

@@ -42,8 +42,8 @@ public class Projectile : MonoBehaviour
     {
         Vector3 dir = Target - Position;
         dir.Normalize();
-
         transform.Translate(dir * Speed * Time.deltaTime);
+        if (sprite == null) return;
         sprite.Translate(new Vector3(0, ZSpeed, 0) * Time.deltaTime);
 
         ZSpeed -= ZAccel * Time.deltaTime;

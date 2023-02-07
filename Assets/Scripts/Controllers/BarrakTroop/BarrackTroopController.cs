@@ -10,6 +10,7 @@ public class BarrackTroopController : MonoBehaviour
     private CircleCollider2D range;
     private TroopEngager engager;
     private Attacker attacker;
+    private Animator anim;
 
     public Transform Target { get; set; }
     public Vector2 Position { get { return new Vector2(rb.position.x, rb.position.y); } }
@@ -35,6 +36,7 @@ public class BarrackTroopController : MonoBehaviour
         range = GetComponentInChildren<CircleCollider2D>();
         engager = GetComponent<TroopEngager>();
         attacker = GetComponent<Attacker>();
+        anim = GetComponent<Animator>();
 
         range.radius = rangeRadius;
         hasReachedMarkerOnce = false;
@@ -51,6 +53,13 @@ public class BarrackTroopController : MonoBehaviour
         if (isBattling)
         {
             Attack();
+            anim.Play("Attack");
+        } else if (hasReachedMarkerOnce)
+        {
+            anim.Play("Idle");
+        } else
+        {
+            anim.Play("Run");
         }
     }
 
