@@ -8,21 +8,13 @@ public class Attacker : MonoBehaviour
     [SerializeField] private float attackRate;
 
     private bool isAttacking = true;
-    private Animator anim;
+    
 
-    private void Start()
-    {
-        anim = gameObject.GetComponent<Animator>();
-    }
+    
 
     public void Attack(Damagable enemy)
     {
-        if (!isAttacking)
-        {
-            anim.Play("Run");
-            return;
-        }
-        anim.Play("Attack");
+        if (!isAttacking) return;
         StartCoroutine(AttackCoroutine(enemy));
     }
 

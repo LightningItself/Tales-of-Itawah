@@ -1316,12 +1316,12 @@ MonoBehaviour:
   enemyPrefabs:
   - {fileID: 7162439583630543200, guid: e9491309e3eb3424e9715e0917daff11, type: 3}
   enemyIndex: 000000000000000000000000
-  enemyGroupSize: 030000000500000007000000
+  enemyGroupSize: 010000000500000007000000
   enemySpawnDelay:
   - 1
   - 1
   - 0.5
-  groupSpawnDelay: 2
+  groupSpawnDelay: 30
   offsetRadius: 0.5
 --- !u!4 &1230086153
 Transform:

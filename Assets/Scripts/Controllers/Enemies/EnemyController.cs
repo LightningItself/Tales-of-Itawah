@@ -67,6 +67,7 @@ public class EnemyController : MonoBehaviour
         // Check Engager
         CheckEngager();
 
+        Debug.Log(isBattling);
         // Attack
         if (isBattling)
         {
