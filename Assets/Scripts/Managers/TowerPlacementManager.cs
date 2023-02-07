@@ -38,9 +38,11 @@ public class TowerPlacementManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && selected > -1)
         {
             Vector3 towerPos = cam.ScreenToWorldPoint(Input.mousePosition);
+            Debug.Log("Pushed");
             Instantiate(Towers[selected], new Vector3(towerPos.x, towerPos.y, -1), Quaternion.identity);
-            Select(-1);
+            GameObject.Find("GameManager").GetComponent<GameManager>().TowerBuilt();
             TowerSelector.SetActive(!TowerSelector.activeSelf);
+            Select(-1);
         }
     }
 

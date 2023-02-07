@@ -6,20 +6,15 @@ using UnityEngine.UI;
 public class EnemyController : MonoBehaviour
 {
     // Components
-    private List<Vector2> waypoints;
     private SpriteRenderer spriteRender;
     private Rigidbody2D rb;
     private EnemyEngager engager;
     private Attacker attacker;
     private Animator anim;
+    private WaypointReceiver wpr;
 
     // Fields
     [SerializeField] private float speed = 2.0f;
-    [SerializeField] private float damage;
-    [SerializeField] private float attackRate;
-
-    private int currentNode;
-    private int totalNodes;
 
     private bool isBattling = false;
 
@@ -36,25 +31,12 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
-        // Finds wayponts
-        Vector3[] wp = GameObject.Find("Waypoints").GetComponent<Waypoint>().Points;
-
-        waypoints = new List<Vector2>();
-
-        foreach(Vector3 w in wp)
-        {
-            waypoints.Add(new Vector2(w.x, w.y));
-        }
-
-        totalNodes = waypoints.Count;
-        currentNode = 0;
-
-        
         rb = GetComponent<Rigidbody2D>();
         spriteRender = GetComponent<SpriteRenderer>();
         engager = GetComponent<EnemyEngager>();
         attacker = GetComponent<Attacker>();
         anim = GetComponent<Animator>();
+        wpr = GetComponent<WaypointReceiver>();
     }
 
     private void Update()
@@ -62,12 +44,12 @@ public class EnemyController : MonoBehaviour
         target = engager.Target;
 
         // Waypoints
-        UpdateWayPoints();
+        //UpdateWayPoints();
+        wpr.UpdateWayPoints(Position - SpawnOffset);
 
         // Check Engager
         CheckEngager();
 
-        Debug.Log(isBattling);
         // Attack
         if (isBattling)
         {
@@ -108,8 +90,7 @@ public class EnemyController : MonoBehaviour
     private void Movement()
     {
         // Calculate direction
-        Vector2 dir = waypoints[currentNode] - Position + SpawnOffset;
-        dir.Normalize();
+        Vector2 dir = wpr.GetDir(Position - SpawnOffset);
 
         if (dir.x < -0.01)
         {
@@ -124,21 +105,6 @@ public class EnemyController : MonoBehaviour
         rb.MovePosition(rb.position + dir * Time.deltaTime * speed);
     }
 
-    private void UpdateWayPoints()
-    {
-        // Check for reaching the game object
-        if ((Position - waypoints[currentNode] - SpawnOffset).magnitude <= 0.5)
-        {
-            currentNode++;
-
-            // Destroy if completes the path
-            if (currentNode == totalNodes)
-            {
-                Destroy(gameObject);
-            }
-        }
-    }
-
     public void OnEngage()
     {
         Debug.Log(engager.Target.name);
@@ -147,5 +113,18 @@ public class EnemyController : MonoBehaviour
     public void OnBeginBattle()
     {
         isBattling = true;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        if (GetComponent<Damagable>().Health <= 0)
+        {
+            gm.Score++;
+        }
+        else
+        {
+            gm.EnemyEscaped();
+        }
     }
 }

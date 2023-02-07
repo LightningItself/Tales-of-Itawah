@@ -10,8 +10,6 @@ public class Attacker : MonoBehaviour
     private bool isAttacking = true;
     
 
-    
-
     public void Attack(Damagable enemy)
     {
         if (!isAttacking) return;

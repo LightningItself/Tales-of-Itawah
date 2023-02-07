@@ -11,15 +11,11 @@ public class ArcherTower : MonoBehaviour
     // Fields
     [SerializeField] private float radius;
 
-    private List<Damagable> enemyList;
-
     private void Start()
     {
         col = GetComponent<CircleCollider2D>();
         attackManager = GetComponent<ITowerAttackManager>();
         col.radius = radius;
-
-        enemyList = new List<Damagable>();
     }
 
     private void Update()

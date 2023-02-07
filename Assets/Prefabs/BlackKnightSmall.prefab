@@ -195,6 +195,7 @@ GameObject:
   - component: {fileID: 5579128076711267535}
   - component: {fileID: 5579128076711267532}
   - component: {fileID: 6867252662147222130}
+  - component: {fileID: 6193321430258431202}
   m_Layer: 2
   m_Name: BlackKnightSmall
   m_TagString: Enemy
@@ -303,8 +304,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  damage: 0
-  attackRate: 0
   target: {fileID: 0}
 --- !u!50 &5579128077149207381
 Rigidbody2D:
@@ -381,8 +380,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 7162439583937340144}
-  maxHealth: 500
-  health: 500
+  maxHealth: 50
+  health: 50
 --- !u!114 &6867252662147222130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,6 +396,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   attackRate: 1
+--- !u!114 &6193321430258431202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7162439583630543200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 334dbc9199ee14005b24e6075ef1c4ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7162439583937340158
 GameObject:
   m_ObjectHideFlags: 0

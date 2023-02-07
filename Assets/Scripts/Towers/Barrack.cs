@@ -28,16 +28,20 @@ public class Barrack : MonoBehaviour
     public float InfluenceRangeRadius { get { return influenceRangeRadius; } }
     public int Code { get { return code; } }
 
+    public bool _hovered;
+    public bool selected;
+
     // Start is called before the first frame update
     private void Start()
     {
         Selected = false;
 
         br = GetComponentInChildren<BarrackRange>();
-
         bm = GetComponentInChildren<BarrackMarker>();
-
         bm.GetComponent<CircleCollider2D>().radius = hoardInfluenceRadius;
+
+        br.gameObject.SetActive(false);
+        bm.gameObject.SetActive(false);
 
         spawnerPosition = Spawner.transform.position;
         MarkerPosition = spawnerPosition;
@@ -51,8 +55,8 @@ public class Barrack : MonoBehaviour
 
     private void Update()
     {
-        ActivateChildren();
-
+        _hovered = hovered;
+        selected = Selected;
 
         // Mouse input
         if(Input.GetMouseButtonDown(0))
@@ -64,26 +68,30 @@ public class Barrack : MonoBehaviour
         SpawnTroop();
     }
 
-    private void ActivateChildren()
-    {
-        // Activate Children
-        br.gameObject.GetComponent<SpriteRenderer>().enabled = Selected;
-        bm.gameObject.GetComponent<SpriteRenderer>().enabled = Selected;
-    }
-
     private void SelectedToggleOnMouseClick()
     {
-        bool prevSelected = Selected;
-        Selected = hovered || br.Hovered;
+        if (!hovered && !br.gameObject.activeSelf) return;
 
-        if (Selected && prevSelected)
+        if (hovered && !br.gameObject.activeSelf)
+        {
+            br.gameObject.SetActive(true);
+            bm.gameObject.SetActive(true);
+            return;
+        }
+
+        if(!hovered && br.Hovered)
         {
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 worldPos2D = new(worldPos.x, worldPos.y);
 
             MarkerPosition = worldPos2D;
+            return;
+        }
 
-            BroadcastMessage("MarkerChanged");
+        if(!hovered && !br.Hovered)
+        {
+            br.gameObject.SetActive(false);
+            bm.gameObject.SetActive(false);
         }
     }
 
