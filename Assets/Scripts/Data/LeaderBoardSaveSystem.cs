@@ -36,6 +36,7 @@ public static class LeaderBoardSaveSysyem
 
     public static LeaderBoardData LoadLeaderBoardData()
     {
+        if (!File.Exists(path)) return new LeaderBoardData(); 
         StreamReader reader = new StreamReader(path);
         string json = reader.ReadToEnd();
 

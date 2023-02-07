@@ -9,15 +9,19 @@ public class GameManager : MonoBehaviour
     public int Score { get; set; }
     public float _Time { get; set; }
 
+    public string Name { get; set; }
+
     private float enemyEscapeCount = 0;
 
     public int score;
     public float time;
     public LeaderBoardData saveData;
+    public string name;
     // Start is called before the first frame update
     void Start()
     {
         saveData = new LeaderBoardData();
+        Time.timeScale = 0;
     }
 
     // Update is called once per frame
@@ -25,6 +29,7 @@ public class GameManager : MonoBehaviour
     {
         score = Score;
         time = _Time;
+        name = Name;
 
 
         if (Input.GetKeyDown(KeyCode.S))
