@@ -8,20 +8,29 @@ public class TowerPlacementManager : MonoBehaviour
     [SerializeField] private List<GameObject> Towers;
     [SerializeField] private List<GameObject> TowerMarkers;
     [SerializeField] private GameObject TowerSelector;
+    [SerializeField] private GameObject env;
 
-    private GameObject selectedTower;
     private GameObject selectedTowerMarker;
 
     private int selected = -1;
 
+    public bool CanPlace { get; set; }
+    public List<TowerInhibitor> Inhibitors { get; set; }
+
+    public bool canPlace;
+
     private void Start()
     {
         selectedTowerMarker = null;
+        CanPlace = true;
+        Inhibitors = new List<TowerInhibitor>();
+        env.BroadcastMessage("TowerPlacementManagerInitialized");
     }
 
     // Update is called once per frame
     void Update()
     {
+        canPlace = CanPlace;
         if(selectedTowerMarker != null)
         {
             Vector3 towerPos = cam.ScreenToWorldPoint(Input.mousePosition);
@@ -35,7 +44,7 @@ public class TowerPlacementManager : MonoBehaviour
             TowerSelector.SetActive(!TowerSelector.activeSelf);
         }
 
-        if (Input.GetMouseButtonDown(0) && selected > -1)
+        if (Input.GetMouseButtonDown(0) && selected > -1 && CanPlace) 
         {
             Vector3 towerPos = cam.ScreenToWorldPoint(Input.mousePosition);
             Debug.Log("Pushed");
@@ -52,11 +61,13 @@ public class TowerPlacementManager : MonoBehaviour
 
         if (selected == -1)
         {
+            foreach(TowerInhibitor i in Inhibitors)
+            {
+                i.gameObject.SetActive(false);
+            }
             Destroy(selectedTowerMarker);
             return;
         }
-
-        selectedTower = Towers[selected];
 
         if (selectedTowerMarker != null)
         {
@@ -64,6 +75,9 @@ public class TowerPlacementManager : MonoBehaviour
         }
     
         selectedTowerMarker = Instantiate(TowerMarkers[selected], cam.ScreenToWorldPoint(Input.mousePosition), Quaternion.identity);
-        
+        foreach (TowerInhibitor i in Inhibitors)
+        {
+            i.gameObject.SetActive(true);
+        }
     }
 }
