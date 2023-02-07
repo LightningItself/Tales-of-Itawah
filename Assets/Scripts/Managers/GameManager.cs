@@ -13,10 +13,11 @@ public class GameManager : MonoBehaviour
 
     public int score;
     public float time;
+    public LeaderBoardData saveData;
     // Start is called before the first frame update
     void Start()
     {
-        
+        saveData = new LeaderBoardData();
     }
 
     // Update is called once per frame
@@ -24,6 +25,22 @@ public class GameManager : MonoBehaviour
     {
         score = Score;
         time = _Time;
+
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            LeaderBoardSaveSysyem.SaveScore("Test", Score);
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            saveData = LeaderBoardSaveSysyem.LoadLeaderBoardData();
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            LeaderBoardSaveSysyem.ClearData();
+        }
 
         _Time += Time.deltaTime;
     }
