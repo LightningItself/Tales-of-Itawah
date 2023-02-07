@@ -9,6 +9,7 @@ public class TowerInhibitor : MonoBehaviour
     private void Start()
     {
         placementManager = GameObject.Find("TowerPlacementManager").GetComponent<TowerPlacementManager>();
+        if (placementManager.Inhibitors != null) placementManager.Inhibitors.Add(this);
     }
 
     private void OnMouseEnter()

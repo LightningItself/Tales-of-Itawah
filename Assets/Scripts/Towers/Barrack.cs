@@ -85,6 +85,7 @@ public class Barrack : MonoBehaviour
             Vector2 worldPos2D = new(worldPos.x, worldPos.y);
 
             MarkerPosition = worldPos2D;
+            BroadcastMessage("MarkerChanged");
             return;
         }
 

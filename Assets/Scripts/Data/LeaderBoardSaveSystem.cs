@@ -22,7 +22,7 @@ public static class LeaderBoardSaveSysyem
         ScoreData data = new ScoreData(name, score);
         LeaderBoardData leaderBoardData = LoadLeaderBoardData();
 
-        leaderBoardData.data.Add(data);
+        /*leaderBoardData.data.Add(data);*/
 
         string json = JsonUtility.ToJson(leaderBoardData);
 

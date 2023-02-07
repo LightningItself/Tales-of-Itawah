@@ -11,6 +11,7 @@ public class PlayButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField] private Sprite buttonUp;
     [SerializeField] private GameManager gameManager;
     [SerializeField] private Text inputText;
+    [SerializeField] private GameObject pauseButton;
 
     void Start()
     {
@@ -27,11 +28,8 @@ public class PlayButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         gameManager.Name = inputText.text;
         GameObject.Find("MainMenu").SetActive(false);
+        pauseButton.SetActive(true);
     }
     
-    void Update()
-    {
-        
-    }
 
 }
