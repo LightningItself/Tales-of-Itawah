@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6384406454643735340}
   - component: {fileID: 6384406454643735337}
   - component: {fileID: 6384406454643735336}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Splash Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}

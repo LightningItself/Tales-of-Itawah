@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
     private Rigidbody2D rb;
     private EnemyEngager engager;
     private Attacker attacker;
+    private Animator anim;
 
     // Fields
     [SerializeField] private float speed = 2.0f;
@@ -53,6 +54,7 @@ public class EnemyController : MonoBehaviour
         spriteRender = GetComponent<SpriteRenderer>();
         engager = GetComponent<EnemyEngager>();
         attacker = GetComponent<Attacker>();
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -69,6 +71,10 @@ public class EnemyController : MonoBehaviour
         if (isBattling)
         {
             Attack();
+            anim.Play("Attack");
+        } else
+        {
+            anim.Play("Run");
         }
     }
 

@@ -16,12 +16,15 @@ public class EnemyEngager : MonoBehaviour
     public float attackerCount;
     public List<int> _ranges;
     public List<TroopEngager> _targets;
+    private Animator anim;
 
     private void Start()
     {
         par = GetComponentInParent<EnemyController>();
         ranges = new List<int>();
         targets = new List<TroopEngager>();
+        anim = gameObject.GetComponent<Animator>();
+        
     }
 
     private void Update()
@@ -46,6 +49,7 @@ public class EnemyEngager : MonoBehaviour
     public void OnBeginBattle()
     {
         par.OnBeginBattle();
+        anim.Play("Attack");
     }
 
     public void AddRange(int code)
