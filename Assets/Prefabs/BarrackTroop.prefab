@@ -243,8 +243,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 3983772290646833469}
-  maxHealth: 50
-  health: 50
+  maxHealth: 20
+  health: 20
 --- !u!114 &5026479575030284580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,7 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2412f39c8c124054bc81ae9cf278771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  damage: 10
   attackRate: 1.5
 --- !u!95 &307461047
 Animator:

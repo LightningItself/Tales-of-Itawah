@@ -138,7 +138,7 @@ MonoBehaviour:
   Spawner: {fileID: 1348463255}
   BarrakTroopPrefab: {fileID: 1303555252547191630, guid: 0198bc486e08649848a8662b36e810d0, type: 3}
   barrackTroopCount: 3
-  spawnDelay: 1
+  spawnDelay: 4
   hoardRadius: 0.32
   hoardInfluenceRadius: 1.5
   code: 0

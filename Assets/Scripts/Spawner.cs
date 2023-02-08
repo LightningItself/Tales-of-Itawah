@@ -3,26 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct Group
+{
+    public int enemyIndex;
+    public int enemyCount;
+    public int enemySpawnDelay;
+}
+
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private List<GameObject> enemyPrefabs;
-    [SerializeField] private List<int> enemyIndex;
-    [SerializeField] private List<int> enemyGroupSize;
-    [SerializeField] private List<float> enemySpawnDelay;
 
     [SerializeField] private float groupSpawnDelay;
     [SerializeField] private float offsetRadius;
 
-    private int currentGroup;
-    private int totalGroups;
+    public Group currentGroup;
+    public bool groupFinished { get; set; }
+    public int groupNumber { get; set; }
     
 
     private bool spawning = true;
 
     private void Start()
     {
-        totalGroups = enemyIndex.Count;
-        currentGroup = 0;
+        groupFinished = true;
+        groupNumber = 1;
     }
 
     private void Update()
@@ -33,16 +39,16 @@ public class Spawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        if (currentGroup >= totalGroups || !spawning || enemyPrefabs.Count == 0) return;
+        if (!spawning || enemyPrefabs.Count == 0 || groupFinished) return;
 
         StartCoroutine(SpawnCoroutine());
     }
 
     IEnumerator SpawnCoroutine()
     {
-        int enemyPrefabIndex = enemyIndex[currentGroup];
-        float spawnDelay = enemySpawnDelay[currentGroup];
-        int groupSize = enemyGroupSize[currentGroup];
+        int enemyPrefabIndex = currentGroup.enemyIndex;
+        float spawnDelay = currentGroup.enemySpawnDelay;
+        int groupSize = currentGroup.enemyCount;
 
         Vector2 offset = Random.insideUnitCircle * Random.Range(0, offsetRadius);
 
@@ -52,12 +58,13 @@ public class Spawner : MonoBehaviour
 
         groupSize--;
 
-        enemyGroupSize[currentGroup] = groupSize;
+        currentGroup.enemyCount = groupSize;
+        //enemyGroupSize.Peek = groupSize;÷
 
         spawning = false;
         if (groupSize == 0)
         {
-            currentGroup++;
+            groupFinished = true;
             yield return new WaitForSeconds(groupSpawnDelay);
         }
         else
@@ -67,4 +74,11 @@ public class Spawner : MonoBehaviour
         spawning = true;
     }
 
+    public void SetGroup(Group group)
+    {
+        currentGroup = group;
+        groupFinished = false;
+        groupNumber++;
+        Debug.Log("Added");
+    }
 }

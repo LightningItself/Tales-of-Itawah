@@ -117,7 +117,9 @@ public class EnemyController : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameManager gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        GameObject gameManager = GameObject.Find("GameManager");
+        if (gameManager == null) return;
+        GameManager gm = GetComponent<GameManager>();
         if (GetComponent<Damagable>().Health <= 0)
         {
             gm.Score++;
