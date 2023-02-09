@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private float towerBuildCost;
+    [SerializeField] private float towerBuildCost; public float ToweBuidCost { get; set; }
     [SerializeField] private Spawner spawner;
     [SerializeField] GameObject gameOverUi;
     [SerializeField] private float timePerUpgrade;
@@ -86,15 +86,15 @@ public class GameManager : MonoBehaviour
                 group = new Group
                 {
                     enemySpawnDelay = 1,
-                    enemyCount = Mathf.Min(spawner.GroupNumber / 6, 15),
+                    enemyCount = spawner.GroupNumber / 6,
                     enemyIndex = 1,
                 };
-            }else if(spawner.GroupNumber % 5 == 0)
+            }else if(spawner.GroupNumber % 4 == 0)
             {
                 group = new Group
                 {
                     enemySpawnDelay = 1,
-                    enemyCount = Mathf.Min(spawner.GroupNumber / 5, 15),
+                    enemyCount = spawner.GroupNumber / 4,
                     enemyIndex = 2,
                 };
             }
@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviour
                 group= new Group
                 {
                     enemySpawnDelay = 1,
-                    enemyCount = Mathf.Min(spawner.GroupNumber * 5 + 10, 25),
+                    enemyCount = 15,
                     enemyIndex = 0,
                 };
             }

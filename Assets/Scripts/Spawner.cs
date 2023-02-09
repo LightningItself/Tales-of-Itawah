@@ -21,6 +21,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private float waveAttackIncrement = 2f;
     [SerializeField] private float waveHealthIncrementAfter5 = 3f;
     [SerializeField] private float waveAttackIncrementAfter5 = 2f;
+    [SerializeField] private GameManager gm;
 
 
     private float currentHealthInc = 0;
@@ -29,7 +30,10 @@ public class Spawner : MonoBehaviour
     public Group currentGroup;
     public bool GroupFinished { get; set; }
     public int GroupNumber { get; set; }
-    
+
+    private bool canIncreseCost = true;
+
+    public float groupNumber;
 
     private bool spawning = true;
 
@@ -43,6 +47,7 @@ public class Spawner : MonoBehaviour
     {
         // Spawn
         SpawnEnemy();
+        groupNumber = GroupNumber;
     }
 
     private void SpawnEnemy()
@@ -87,10 +92,19 @@ public class Spawner : MonoBehaviour
         spawning = true;
         currentHealthInc += waveHealthIncrement;
         currentDamageInc += waveAttackIncrement;
-        if(GroupNumber % 10 == 0)
+        if(GroupNumber % 5 == 0)
         {
             currentDamageInc += waveAttackIncrementAfter5;
             currentHealthInc += waveHealthIncrementAfter5;
+            if (canIncreseCost)
+            {
+                gm.TowerBuildCost += 4;
+                canIncreseCost = false;
+            }
+        }
+        else
+        {
+            canIncreseCost = true;
         }
     }
 
