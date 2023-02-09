@@ -232,7 +232,7 @@ MonoBehaviour:
   towerBuildCost: 10
   spawner: {fileID: 1230086152}
   gameOverUi: {fileID: 289529575}
-  timePerUpgrade: 7
+  timePerUpgrade: 60
   score: 0
   time: 0
   saveData:
@@ -2931,75 +2931,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1094695740}
   m_CullTransparentMesh: 1
---- !u!1001 &1206098421
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 715640035372218300, guid: 42dfa10419a604ebb996d9737c2355f5, type: 3}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 715640035372218300, guid: 42dfa10419a604ebb996d9737c2355f5, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.723
-      objectReference: {fileID: 0}
-    - target: {fileID: 715640035372218300, guid: 42dfa10419a604ebb996d9737c2355f5, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.695
-      objectReference: {fileID: 0}
-    - target: {fileID: 715640035372218300, guid: 42dfa10419a604ebb996d9737c2355f5, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 715640035372218300, guid: 42dfa10419a604ebb996d9737c2355f5, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 715640035372218300, guid: 42dfa10419a604ebb996d9737c2355f5, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 715640035372218300, guid: 42dfa10419a604ebb996d9737c2355f5, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 715640035372218300, guid: 42dfa10419a604ebb996d9737c2355f5, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 715640035372218300, guid: 42dfa10419a604ebb996d9737c2355f5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 715640035372218300, guid: 42dfa10419a604ebb996d9737c2355f5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 715640035372218300, guid: 42dfa10419a604ebb996d9737c2355f5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 715640035372218303, guid: 42dfa10419a604ebb996d9737c2355f5, type: 3}
-      propertyPath: m_Name
-      value: Tank
-      objectReference: {fileID: 0}
-    - target: {fileID: 2874815422901711379, guid: 42dfa10419a604ebb996d9737c2355f5, type: 3}
-      propertyPath: health
-      value: 250
-      objectReference: {fileID: 0}
-    - target: {fileID: 2874815422901711379, guid: 42dfa10419a604ebb996d9737c2355f5, type: 3}
-      propertyPath: maxHealth
-      value: 250
-      objectReference: {fileID: 0}
-    - target: {fileID: 3874520513903752365, guid: 42dfa10419a604ebb996d9737c2355f5, type: 3}
-      propertyPath: damage
-      value: 15
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 42dfa10419a604ebb996d9737c2355f5, type: 3}
 --- !u!1 &1212102217
 GameObject:
   m_ObjectHideFlags: 0
@@ -3093,9 +3024,9 @@ MonoBehaviour:
   - {fileID: 7162439583630543200, guid: e9491309e3eb3424e9715e0917daff11, type: 3}
   - {fileID: 715640035372218303, guid: 42dfa10419a604ebb996d9737c2355f5, type: 3}
   - {fileID: 7189969379572647225, guid: 5876cd7cda34945ac991fd6a5eeb5926, type: 3}
-  groupSpawnDelay: 6
+  groupSpawnDelay: 4
   offsetRadius: 0.5
-  waveHealthIncrement: 1
+  waveHealthIncrement: 3
   waveAttackIncrement: 1
   currentGroup:
     enemyIndex: 0

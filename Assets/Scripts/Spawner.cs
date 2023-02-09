@@ -58,7 +58,7 @@ public class Spawner : MonoBehaviour
         GameObject enemy = Instantiate(enemyPrefabs[enemyPrefabIndex], instantiationPosition, Quaternion.identity);
 
         EnemyController ec = enemy.GetComponent<EnemyController>();
-        ec.Attacker.AttackBoost = waveHealthIncrement * GroupNumber;
+        ec.Attacker.AttackBoost = waveHealthIncrement * GroupNumber * GroupNumber;
         ec.Damagable.HealthBoost = waveAttackIncrement * GroupNumber;
         
         ec.SpawnOffset = offset;
