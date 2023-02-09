@@ -7,7 +7,7 @@ public class ArcherTowerAttackManager : MonoBehaviour, ITowerAttackManager
     private Attacker attacker;
     private List<Damagable> enemyList;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         attacker = GetComponent<Attacker>();
         enemyList = new List<Damagable>();
@@ -39,5 +39,16 @@ public class ArcherTowerAttackManager : MonoBehaviour, ITowerAttackManager
     public void RemoveEnemy(Damagable enemy)
     {
         enemyList.Remove(enemy);
+    }
+
+    public void SetDamage(float damage, float boost)
+    {
+        attacker.Damage = damage;
+        attacker.AttackBoost = boost;
+    }
+
+    public void SetFireRate(float fireRate)
+    {
+        attacker.AttackRate = fireRate;
     }
 }

@@ -7,11 +7,15 @@ public class Barrack : MonoBehaviour
     // Components
     private BarrackRange br;
     private BarrackMarker bm;
+    private Stats stats;
 
     // Fields
     [SerializeField] private float influenceRangeRadius;
     [SerializeField] private Transform Spawner;
     [SerializeField] private GameObject BarrakTroopPrefab;
+    [SerializeField] private float troopDamage;
+    [SerializeField] private float troopHealth;
+    [SerializeField] private float troopAttackRate;
     [SerializeField] private int barrackTroopCount;
     [SerializeField] private float spawnDelay;
     [SerializeField] private float hoardRadius;
@@ -25,9 +29,16 @@ public class Barrack : MonoBehaviour
 
     public Vector3 MarkerPosition { get; private set; }
     public bool Selected { get; private set; }
-    public float InfluenceRangeRadius { get { return influenceRangeRadius; } }
+    public float InfluenceRangeRadius { get { return influenceRangeRadius + RangeBoost; } }
     public int Code { get { return code; } }
 
+    public float TroopDamageBoost { get; set; }
+    public float TroopHealthBoost { get; set; }
+    public int TroopCountBoost { get; set; }
+    public float RangeBoost { get; set; }
+
+    public int BarrackTroopCount { get { return barrackTroopCount + TroopCountBoost; } }
+    
     public bool _hovered;
     public bool selected;
 
@@ -39,18 +50,12 @@ public class Barrack : MonoBehaviour
         br = GetComponentInChildren<BarrackRange>();
         bm = GetComponentInChildren<BarrackMarker>();
         bm.GetComponent<CircleCollider2D>().radius = hoardInfluenceRadius;
+        stats = GameObject.Find("Stats").GetComponent<Stats>();
 
         br.gameObject.SetActive(false);
-        bm.gameObject.SetActive(false);
 
         spawnerPosition = Spawner.transform.position;
         MarkerPosition = spawnerPosition;
-
-        troopsToBeSpawnwed = new Stack<int>();
-        for(int i = 0; i < barrackTroopCount; i++)
-        {
-            troopsToBeSpawnwed.Push(i);
-        }
     }
 
     private void Update()
@@ -75,7 +80,17 @@ public class Barrack : MonoBehaviour
         if (hovered && !br.gameObject.activeSelf)
         {
             br.gameObject.SetActive(true);
-            bm.gameObject.SetActive(true);
+
+            List<string> statsList = new List<string>
+            {
+                "Range: " + InfluenceRangeRadius.ToString(),
+                "Troop Count: " + barrackTroopCount.ToString(),
+                "Troop Damage: " + troopDamage.ToString(),
+                "Troop Health: " + troopHealth.ToString(),
+            };
+
+            stats.UpdateText(statsList);
+
             return;
         }
 
@@ -92,7 +107,7 @@ public class Barrack : MonoBehaviour
         if(!hovered && !br.Hovered)
         {
             br.gameObject.SetActive(false);
-            bm.gameObject.SetActive(false);
+            stats.ResetText();
         }
     }
 
@@ -105,7 +120,7 @@ public class Barrack : MonoBehaviour
 
     private Vector2 SpawnOffsetDir(int troopNumber)
     {    
-        float angle = troopNumber * 2f * Mathf.PI / barrackTroopCount;
+        float angle = troopNumber * 2f * Mathf.PI / BarrackTroopCount;
         return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
     }
 
@@ -117,6 +132,12 @@ public class Barrack : MonoBehaviour
 
         // Instantiate
         GameObject troop = Instantiate(BarrakTroopPrefab, spawnerPosition, Quaternion.identity);
+
+        BarrackTroopController con = troop.GetComponent<BarrackTroopController>();
+        con.SetDamage(troopDamage, TroopDamageBoost);
+        con.SetHealth(troopHealth, TroopHealthBoost);
+        con.SetAttackRate(troopAttackRate);
+
         troop.transform.SetParent(transform);
 
         // Initialize
@@ -145,5 +166,14 @@ public class Barrack : MonoBehaviour
     public void DecreaseCurrentTroopCount(int troopNumber)
     {
         troopsToBeSpawnwed.Push(troopNumber);
+    }
+
+    public void UpdateStats()
+    {
+        troopsToBeSpawnwed = new Stack<int>();
+        for (int i = 0; i < BarrackTroopCount; i++)
+        {
+            troopsToBeSpawnwed.Push(i);
+        }
     }
 }

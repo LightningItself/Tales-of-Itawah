@@ -137,10 +137,13 @@ MonoBehaviour:
   influenceRangeRadius: 4
   Spawner: {fileID: 1348463255}
   BarrakTroopPrefab: {fileID: 1303555252547191630, guid: 0198bc486e08649848a8662b36e810d0, type: 3}
+  troopDamage: 5
+  troopHealth: 50
+  troopAttackRate: 1.5
   barrackTroopCount: 3
-  spawnDelay: 4
+  spawnDelay: 2
   hoardRadius: 0.32
-  hoardInfluenceRadius: 1.5
+  hoardInfluenceRadius: 2
   code: 0
   _hovered: 0
   selected: 0
@@ -168,7 +171,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.57, y: 1.74}
+  m_Size: {x: 1.9, y: 2.51}
   m_EdgeRadius: 0
 --- !u!95 &9173301562939259106
 Animator:
@@ -231,7 +234,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 165695021768190359}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -435,7 +438,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4000702279457357325
 Transform:
   m_ObjectHideFlags: 0

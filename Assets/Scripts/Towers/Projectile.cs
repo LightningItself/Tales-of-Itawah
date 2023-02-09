@@ -50,8 +50,7 @@ public class Projectile : MonoBehaviour
     }
 
     private void CheckHit()
-    {
-        Debug.Log((Position - Target).magnitude);
+    { 
         if((Position - Target).magnitude <= 0.01)
         {
             

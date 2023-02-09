@@ -9,8 +9,13 @@ public class TowerPlacementManager : MonoBehaviour
     [SerializeField] private List<GameObject> TowerMarkers;
     [SerializeField] private GameObject TowerSelector;
     [SerializeField] private GameObject env;
+    [SerializeField] private float towerAttackBoost = 2f;
+    [SerializeField] private float towerRangeBoost = 0.2f;
+    [SerializeField] private float towerheathBoost = 2f;
+    [SerializeField] private float towerCountBoost = 0.34f;
 
     private GameObject selectedTowerMarker;
+    private GameManager gm;
 
     private int selected = -1;
 
@@ -19,12 +24,14 @@ public class TowerPlacementManager : MonoBehaviour
 
     public bool canPlace;
 
-    private void Start()
+    private void Awake()
     {
         selectedTowerMarker = null;
         CanPlace = true;
         Inhibitors = new List<TowerInhibitor>();
         env.BroadcastMessage("TowerPlacementManagerInitialized");
+
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -48,7 +55,31 @@ public class TowerPlacementManager : MonoBehaviour
         {
             Vector3 towerPos = cam.ScreenToWorldPoint(Input.mousePosition);
             Debug.Log("Pushed");
-            Instantiate(Towers[selected], new Vector3(towerPos.x, towerPos.y, -1), Quaternion.identity);
+
+            GameObject tower = Instantiate(Towers[selected], new Vector3(towerPos.x, towerPos.y, -1), Quaternion.identity);
+            tower.transform.SetParent(env.transform);
+
+            if (selected == 1 || selected == 2)
+            {
+                ArcherTower con = tower.GetComponent<ArcherTower>();
+
+                con.DamageBoost = gm.TowerUpgradeStatus * towerAttackBoost;
+                con.RadiusBoost = gm.TowerUpgradeStatus * towerRangeBoost;
+                
+                con.UpdateStats();
+            }
+            else
+            {
+                Barrack con = tower.GetComponent<Barrack>();
+
+                con.TroopDamageBoost = gm.TowerUpgradeStatus * towerAttackBoost;
+                con.TroopHealthBoost = gm.TowerUpgradeStatus * towerheathBoost;
+                con.RangeBoost = gm.TowerUpgradeStatus * towerRangeBoost;
+                con.TroopCountBoost = (int) (gm.TowerUpgradeStatus * towerCountBoost);
+
+                con.UpdateStats();
+            }
+
             GameObject.Find("GameManager").GetComponent<GameManager>().TowerBuilt();
             TowerSelector.SetActive(!TowerSelector.activeSelf);
             Select(-1);

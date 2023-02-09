@@ -22,12 +22,27 @@ public static class LeaderBoardSaveSysyem
         ScoreData data = new ScoreData(name, score);
         LeaderBoardData leaderBoardData = LoadLeaderBoardData();
 
-        leaderBoardData.data.Add(data);
-        leaderBoardData.data.Sort(0, leaderBoardData.data.Count, new ScoreDataComparer());
-
-        if (leaderBoardData.data.Count > 10)
+        if (leaderBoardData.data.Count < 10)
         {
-            leaderBoardData.data.RemoveAt(leaderBoardData.data.Count - 1);
+            leaderBoardData.data.Add(data);
+        }
+        else if (leaderBoardData.data[10].score < data.score)
+        {
+            leaderBoardData.data[10] = data;
+        }
+
+        for(int i = leaderBoardData.data.Count - 1; i > 0; i--)
+        {
+            if(leaderBoardData.data[i].score > leaderBoardData.data[i - 1].score)
+            {
+                ScoreData t = leaderBoardData.data[i];
+                leaderBoardData.data[i] = leaderBoardData.data[i - 1];
+                leaderBoardData.data[i - 1] = t;
+            }
+            else
+            {
+                break;
+            }
         }
 
         string json = JsonUtility.ToJson(leaderBoardData);

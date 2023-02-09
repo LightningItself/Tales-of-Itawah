@@ -8,6 +8,10 @@ public class Attacker : MonoBehaviour
     [SerializeField] private float attackRate;
 
     private bool isAttacking = true;
+
+    public float Damage { get { return damage; } set { damage = value; } }
+    public float AttackRate { get { return attackRate; } set { attackRate = value; } }
+    public float AttackBoost { get; set; }
     
 
     public void Attack(Damagable enemy)
@@ -18,7 +22,7 @@ public class Attacker : MonoBehaviour
 
     IEnumerator AttackCoroutine(Damagable enemy)
     {
-        enemy.ApplyDamage(damage);
+        enemy.ApplyDamage(damage + AttackBoost);
         isAttacking = false;
         yield return new WaitForSeconds(1 / attackRate);
         isAttacking = true;

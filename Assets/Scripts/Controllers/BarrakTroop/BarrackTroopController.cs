@@ -10,6 +10,7 @@ public class BarrackTroopController : MonoBehaviour
     private CircleCollider2D range;
     private TroopEngager engager;
     private Attacker attacker;
+    private Damagable damagable;
     private Animator anim;
 
     public Transform Target { get; set; }
@@ -29,13 +30,14 @@ public class BarrackTroopController : MonoBehaviour
     public EnemyEngager target;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         sprite_renderer = GetComponent<SpriteRenderer>();
         range = GetComponentInChildren<CircleCollider2D>();
         engager = GetComponent<TroopEngager>();
         attacker = GetComponent<Attacker>();
+        damagable = GetComponent<Damagable>();
         anim = GetComponent<Animator>();
 
         range.radius = rangeRadius;
@@ -137,13 +139,11 @@ public class BarrackTroopController : MonoBehaviour
         EnemyEngager newEnemy = collision.GetComponent<EnemyEngager>();
 
         if (newEnemy == null || !newEnemy.CompareTag("Enemy") || !newEnemy.FindRange(BarrackCode) || !hasReachedMarkerOnce) return;
-        Debug.Log("Enter");
 
         EnemyEngager targetEnemy = engager.Target;
 
-        if (targetEnemy == null || targetEnemy.AttackerCount - 1 > newEnemy.AttackerCount) 
-        {
-            Debug.Log("LOLOL");
+        if (targetEnemy == null || targetEnemy.AttackerCount - 1 > newEnemy.AttackerCount)
+        { 
             SetTargetEnemy(newEnemy);
         }
     }
@@ -179,5 +179,22 @@ public class BarrackTroopController : MonoBehaviour
         Debug.Log("Marker Change");
         if(engager.Target != null) engager.Target.Disengage(engager);
         engager.Disengage();
+    }
+
+    public void SetDamage(float damage, float boost)
+    {
+        attacker.Damage = damage;
+        attacker.AttackBoost = boost;
+    }
+
+    public void SetHealth(float health, float boost)
+    {
+        damagable.Health = health;
+        damagable.HealthBoost = boost;
+    }
+
+    public void SetAttackRate(float attackRate)
+    {
+        attacker.AttackRate = attackRate;
     }
 }

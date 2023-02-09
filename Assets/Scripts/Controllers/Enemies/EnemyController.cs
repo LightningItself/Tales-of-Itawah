@@ -10,8 +10,10 @@ public class EnemyController : MonoBehaviour
     private Rigidbody2D rb;
     private EnemyEngager engager;
     private Attacker attacker;
+    private Damagable damagable;
     private Animator anim;
     private WaypointReceiver wpr;
+    private GameManager gm;
 
     // Fields
     [SerializeField] private float speed = 2.0f;
@@ -19,6 +21,8 @@ public class EnemyController : MonoBehaviour
     private bool isBattling = false;
 
     public Vector2 SpawnOffset { get; set; }
+    public Attacker Attacker { get { return attacker; } }
+    public Damagable Damagable { get { return damagable; } }
 
     // Properties
     private Vector2 Position
@@ -29,14 +33,17 @@ public class EnemyController : MonoBehaviour
     // Debug
     public TroopEngager target;
 
-    private void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRender = GetComponent<SpriteRenderer>();
         engager = GetComponent<EnemyEngager>();
         attacker = GetComponent<Attacker>();
+        damagable = GetComponent<Damagable>();
         anim = GetComponent<Animator>();
         wpr = GetComponent<WaypointReceiver>();
+        GameObject gameManager = GameObject.Find("GameManager");
+        gm = gameManager.GetComponent<GameManager>();
     }
 
     private void Update()
@@ -117,10 +124,8 @@ public class EnemyController : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameObject gameManager = GameObject.Find("GameManager");
-        if (gameManager == null) return;
-        GameManager gm = GetComponent<GameManager>();
-        if (GetComponent<Damagable>().Health <= 0)
+        
+        if (damagable.Health + damagable.HealthBoost  <= 0)
         {
             gm.Score++;
         }
@@ -128,5 +133,15 @@ public class EnemyController : MonoBehaviour
         {
             gm.EnemyEscaped();
         }
+    }
+
+    public void SetHealthBoost(float val)
+    {
+        //damagable.HealthBoost = val;
+    }
+
+    public void SetDamageBoost(float val)
+    {
+        //attacker.AttackBoost = val;
     }
 }

@@ -17,18 +17,20 @@ public class Spawner : MonoBehaviour
 
     [SerializeField] private float groupSpawnDelay;
     [SerializeField] private float offsetRadius;
+    [SerializeField] private float waveHealthIncrement = 3f;
+    [SerializeField] private float waveAttackIncrement = 2f;
 
     public Group currentGroup;
-    public bool groupFinished { get; set; }
-    public int groupNumber { get; set; }
+    public bool GroupFinished { get; set; }
+    public int GroupNumber { get; set; }
     
 
     private bool spawning = true;
 
     private void Start()
     {
-        groupFinished = true;
-        groupNumber = 1;
+        GroupFinished = true;
+        GroupNumber = 1;
     }
 
     private void Update()
@@ -39,7 +41,7 @@ public class Spawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        if (!spawning || enemyPrefabs.Count == 0 || groupFinished) return;
+        if (!spawning || enemyPrefabs.Count == 0 || GroupFinished) return;
 
         StartCoroutine(SpawnCoroutine());
     }
@@ -54,7 +56,12 @@ public class Spawner : MonoBehaviour
 
         Vector3 instantiationPosition = transform.position + new Vector3(offset.x, offset.y, 0);
         GameObject enemy = Instantiate(enemyPrefabs[enemyPrefabIndex], instantiationPosition, Quaternion.identity);
-        enemy.GetComponent<EnemyController>().SpawnOffset = offset;
+
+        EnemyController ec = enemy.GetComponent<EnemyController>();
+        ec.Attacker.AttackBoost = waveHealthIncrement * GroupNumber;
+        ec.Damagable.HealthBoost = waveAttackIncrement * GroupNumber;
+        
+        ec.SpawnOffset = offset;
 
         groupSize--;
 
@@ -62,9 +69,9 @@ public class Spawner : MonoBehaviour
         //enemyGroupSize.Peek = groupSize;÷
 
         spawning = false;
-        if (groupSize == 0)
+        if (groupSize <= 0)
         {
-            groupFinished = true;
+            GroupFinished = true;
             yield return new WaitForSeconds(groupSpawnDelay);
         }
         else
@@ -77,8 +84,8 @@ public class Spawner : MonoBehaviour
     public void SetGroup(Group group)
     {
         currentGroup = group;
-        groupFinished = false;
-        groupNumber++;
+        GroupFinished = false;
+        GroupNumber++;
         Debug.Log("Added");
     }
 }

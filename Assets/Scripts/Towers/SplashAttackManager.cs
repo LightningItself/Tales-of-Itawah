@@ -45,7 +45,6 @@ public class SplashAttackManager : MonoBehaviour, ITowerAttackManager
 
     IEnumerator AttackCoroutine(Vector2 target)
     {
-        Debug.Log(target);
         Projectile proj = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Projectile>();
 
         proj.Target = target;
@@ -69,5 +68,15 @@ public class SplashAttackManager : MonoBehaviour, ITowerAttackManager
     public void RemoveEnemy(Damagable enemy)
     {
         enemyList.Remove(enemy);
+    }
+
+    public void SetDamage(float _damage, float boost)
+    {
+        damage = _damage + boost;
+    }
+
+    public void SetFireRate(float _fireRate)
+    {
+        fireRate = _fireRate;
     }
 }

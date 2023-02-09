@@ -15,7 +15,6 @@ public class TowerInhibitor : MonoBehaviour
     private void OnMouseEnter()
     {
         placementManager.CanPlace = false;
-        Debug.Log("MENTER");
     }
 
     private void OnMouseExit()

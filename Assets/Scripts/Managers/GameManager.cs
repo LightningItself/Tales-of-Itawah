@@ -7,9 +7,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float towerBuildCost;
     [SerializeField] private Spawner spawner;
     [SerializeField] GameObject gameOverUi;
+    [SerializeField] private float timePerUpgrade;
 
     public int Score { get; set; }
     public float _Time { get; set; }
+    public int TowerUpgradeStatus { get; private set; }
     public float TowerBuildCost {
         get
         {
@@ -28,6 +30,7 @@ public class GameManager : MonoBehaviour
     public float time;
     public LeaderBoardData saveData;
     public string name;
+    public float escCount;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +41,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        escCount = enemyEscapeCount;
         score = Score;
         time = _Time;
         name = Name;
@@ -59,6 +63,8 @@ public class GameManager : MonoBehaviour
         GenerateGroup();
 
         _Time += Time.deltaTime;
+        TowerUpgradeStatus = Mathf.Max((int)(_Time / timePerUpgrade), TowerUpgradeStatus);
+        TowerUpgradeStatus = Mathf.Min(TowerUpgradeStatus, 6);
     }
 
     private void GameOver()
@@ -72,14 +78,36 @@ public class GameManager : MonoBehaviour
 
     private void GenerateGroup()
     {
-        if (spawner.groupFinished)
+        if (spawner.GroupFinished)
         {
-            Group group = new Group
+            Group group;
+            if(spawner.GroupNumber % 3 == 0)
             {
-                enemySpawnDelay = 1,
-                enemyCount = spawner.groupNumber * 5,
-                enemyIndex = 0,
-            };
+                group = new Group
+                {
+                    enemySpawnDelay = 1,
+                    enemyCount = spawner.GroupNumber / 6 + 1,
+                    enemyIndex = 1,
+                };
+            }else if(spawner.GroupNumber % 7 == 0)
+            {
+                group = new Group
+                {
+                    enemySpawnDelay = 1,
+                    enemyCount = spawner.GroupNumber / 7 + 1,
+                    enemyIndex = 2,
+                };
+            }
+            else
+            {
+
+                group= new Group
+                {
+                    enemySpawnDelay = 1,
+                    enemyCount = spawner.GroupNumber * 5,
+                    enemyIndex = 0,
+                };
+            }
 
             spawner.SetGroup(group);
         }
@@ -88,6 +116,7 @@ public class GameManager : MonoBehaviour
     public void EnemyEscaped()
     {
         enemyEscapeCount++;
+        Debug.Log(enemyEscapeCount);
         _Time -= enemyEscapeCount * enemyEscapeCount;
     }
 
