@@ -6,17 +6,23 @@ public class ArcherTowerAttackManager : MonoBehaviour, ITowerAttackManager
 {
     private Attacker attacker;
     private List<Damagable> enemyList;
+    private Animator anim;
     // Start is called before the first frame update
     void Awake()
     {
         attacker = GetComponent<Attacker>();
         enemyList = new List<Damagable>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (enemyList.Count == 0)
+            anim.Play("Idle");
+        else
+            anim.Play("Attack");
+
     }
 
     public void Attack()

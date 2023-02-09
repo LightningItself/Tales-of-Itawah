@@ -250,8 +250,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 4
-  damage: 5
-  fireRate: 1
+  damage: 15
+  fireRate: 1.2
   sprite: {fileID: 3162064934500849349}
   _hovered: 0
 --- !u!114 &1412018190
@@ -266,8 +266,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2412f39c8c124054bc81ae9cf278771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
-  attackRate: 2
+  damage: 15
+  attackRate: 1.2
 --- !u!114 &1412018191
 MonoBehaviour:
   m_ObjectHideFlags: 0

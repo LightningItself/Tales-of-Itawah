@@ -82,8 +82,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1487197929, guid: 6a4406d13e5863640bb55f4257cf0b1d, type: 3}
-  m_Color: {r: 0, g: 0.5, b: 0.02687335, a: 1}
+  m_Sprite: {fileID: -435524444, guid: 9377922426a00f043a31c659902feba7, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -103,7 +103,7 @@ Animator:
   m_GameObject: {fileID: 715640035372218303}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2108a30f9bb1ce94d89546e5a14855f1, type: 2}
+  m_Controller: {fileID: 9100000, guid: 61702b117a80de54faf861ce3f61bf70, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -202,8 +202,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 715640035547700271}
-  maxHealth: 120
-  health: 120
+  maxHealth: 250
+  health: 250
 --- !u!114 &3874520513903752365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2412f39c8c124054bc81ae9cf278771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 15
   attackRate: 0.5
 --- !u!114 &4574380751126547005
 MonoBehaviour:
@@ -420,7 +420,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.19}
+  m_AnchoredPosition: {x: 0, y: 0.52}
   m_SizeDelta: {x: 55.7395, y: 51.7506}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &715640036964019922

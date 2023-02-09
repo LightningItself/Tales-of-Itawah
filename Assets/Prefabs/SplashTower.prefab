@@ -319,7 +319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 7
-  damage: 5
+  damage: 10
   fireRate: 0.5
   sprite: {fileID: 4339763117729281301}
   _hovered: 0
@@ -338,7 +338,7 @@ MonoBehaviour:
   projectile: {fileID: 7414726275630703854, guid: 78a55d2eeb6784d1b848f6b3e94670a1, type: 3}
   fireDuration: 1
   fireRate: 0.5
-  damage: 5
+  damage: 10
   splashRadius: 1.5
   zSpeed: 7
 --- !u!61 &9193152350436931514

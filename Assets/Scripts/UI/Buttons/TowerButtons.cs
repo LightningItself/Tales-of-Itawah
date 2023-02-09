@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class ContinueButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class TowerButtons : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     private Image spriteImage;
     [SerializeField] private Sprite buttonDown;
@@ -22,6 +21,5 @@ public class ContinueButton : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     public void OnPointerUp(PointerEventData eventData)
     {
         spriteImage.sprite = buttonUp;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
