@@ -26,9 +26,9 @@ public static class LeaderBoardSaveSysyem
         {
             leaderBoardData.data.Add(data);
         }
-        else if (leaderBoardData.data[10].score < data.score)
+        else if (leaderBoardData.data[9].score < data.score)
         {
-            leaderBoardData.data[10] = data;
+            leaderBoardData.data[9] = data;
         }
 
         for(int i = leaderBoardData.data.Count - 1; i > 0; i--)

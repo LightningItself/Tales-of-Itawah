@@ -137,11 +137,11 @@ MonoBehaviour:
   influenceRangeRadius: 4
   Spawner: {fileID: 1348463255}
   BarrakTroopPrefab: {fileID: 1303555252547191630, guid: 0198bc486e08649848a8662b36e810d0, type: 3}
-  troopDamage: 4
-  troopHealth: 50
-  troopAttackRate: 1
+  troopDamage: 5
+  troopHealth: 65
+  troopAttackRate: 1.5
   barrackTroopCount: 3
-  spawnDelay: 2
+  spawnDelay: 1
   hoardRadius: 0.32
   hoardInfluenceRadius: 2
   code: 0

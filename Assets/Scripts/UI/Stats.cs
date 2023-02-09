@@ -8,8 +8,11 @@ public class Stats : MonoBehaviour
     [SerializeField] private List<Text> textList;
     [SerializeField] private GameObject ui;
 
-    public void UpdateText(List<string> statsList)
+    private GameObject selected = null;
+
+    public void UpdateText(List<string> statsList, GameObject _selected)
     {
+        selected = _selected;
         ui.SetActive(true);
         for (int i = 0; i < 4; i++)
         {
@@ -23,8 +26,11 @@ public class Stats : MonoBehaviour
         }
     }
 
-    public void ResetText()
+    public void ResetText(GameObject _selected)
     {
-        ui.SetActive(false);
+        if(selected == _selected)
+        {
+            ui.SetActive(false);
+        }
     }
 }

@@ -53,6 +53,7 @@ public class ArcherTower : MonoBehaviour
 
             if (hovered)
             {
+                
                 List<string> statsList = new List<string>
                 {
                     "Range: " + Radius.ToString(),
@@ -60,18 +61,18 @@ public class ArcherTower : MonoBehaviour
                     "Fire Rate: " + fireRate.ToString(),
                 };
 
-                stats.UpdateText(statsList);
+                stats.UpdateText(statsList, gameObject);
             }
             else
             {
-                stats.ResetText();
+                stats.ResetText(gameObject);
             }
         }
 
         if (Input.GetMouseButtonDown(1))
         {
             sprite.SetActive(false);
-            stats.ResetText();
+            stats.ResetText(gameObject);
         }
     }
 

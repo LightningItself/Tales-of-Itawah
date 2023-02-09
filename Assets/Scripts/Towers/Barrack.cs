@@ -66,6 +66,7 @@ public class Barrack : MonoBehaviour
         // Mouse input
         if(Input.GetMouseButtonDown(0))
         {
+            
             SelectedToggleOnMouseClick();
         }
 
@@ -79,6 +80,7 @@ public class Barrack : MonoBehaviour
 
         if (hovered && !br.gameObject.activeSelf)
         {
+            Debug.Log("Show Stat");
             br.gameObject.SetActive(true);
 
             List<string> statsList = new List<string>
@@ -89,7 +91,7 @@ public class Barrack : MonoBehaviour
                 "Troop Health: " + troopHealth.ToString(),
             };
 
-            stats.UpdateText(statsList);
+            stats.UpdateText(statsList, gameObject);
 
             return;
         }
@@ -107,7 +109,7 @@ public class Barrack : MonoBehaviour
         if(!hovered && !br.Hovered)
         {
             br.gameObject.SetActive(false);
-            stats.ResetText();
+            stats.ResetText(gameObject);
         }
     }
 

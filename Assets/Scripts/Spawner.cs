@@ -19,6 +19,12 @@ public class Spawner : MonoBehaviour
     [SerializeField] private float offsetRadius;
     [SerializeField] private float waveHealthIncrement = 3f;
     [SerializeField] private float waveAttackIncrement = 2f;
+    [SerializeField] private float waveHealthIncrementAfter5 = 3f;
+    [SerializeField] private float waveAttackIncrementAfter5 = 2f;
+
+
+    private float currentHealthInc = 0;
+    private float currentDamageInc = 0;
 
     public Group currentGroup;
     public bool GroupFinished { get; set; }
@@ -58,8 +64,8 @@ public class Spawner : MonoBehaviour
         GameObject enemy = Instantiate(enemyPrefabs[enemyPrefabIndex], instantiationPosition, Quaternion.identity);
 
         EnemyController ec = enemy.GetComponent<EnemyController>();
-        ec.Attacker.AttackBoost = waveHealthIncrement * GroupNumber * GroupNumber;
-        ec.Damagable.HealthBoost = waveAttackIncrement * GroupNumber;
+        ec.Attacker.AttackBoost = currentHealthInc;
+        ec.Damagable.HealthBoost = currentDamageInc;
         
         ec.SpawnOffset = offset;
 
@@ -79,6 +85,13 @@ public class Spawner : MonoBehaviour
             yield return new WaitForSeconds(spawnDelay);
         }
         spawning = true;
+        currentHealthInc += waveHealthIncrement;
+        currentDamageInc += waveAttackIncrement;
+        if(GroupNumber % 10 == 0)
+        {
+            currentDamageInc += waveAttackIncrementAfter5;
+            currentHealthInc += waveHealthIncrementAfter5;
+        }
     }
 
     public void SetGroup(Group group)

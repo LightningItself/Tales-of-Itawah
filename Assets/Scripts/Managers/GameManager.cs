@@ -46,14 +46,14 @@ public class GameManager : MonoBehaviour
         time = _Time;
         name = Name;
 
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            LeaderBoardSaveSysyem.ClearData();
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            saveData = LeaderBoardSaveSysyem.LoadLeaderBoardData();
-        }
+        //if (Input.GetKeyDown(KeyCode.C))
+        //{
+        //    LeaderBoardSaveSysyem.ClearData();
+        //}
+        //if (Input.GetKeyDown(KeyCode.S))
+        //{
+        //    saveData = LeaderBoardSaveSysyem.LoadLeaderBoardData();
+        //}
 
         if(_Time <= -0.01)
         {
@@ -86,15 +86,15 @@ public class GameManager : MonoBehaviour
                 group = new Group
                 {
                     enemySpawnDelay = 1,
-                    enemyCount = spawner.GroupNumber / 6 + 1,
+                    enemyCount = Mathf.Min(spawner.GroupNumber / 6, 15),
                     enemyIndex = 1,
                 };
-            }else if(spawner.GroupNumber % 7 == 0)
+            }else if(spawner.GroupNumber % 5 == 0)
             {
                 group = new Group
                 {
                     enemySpawnDelay = 1,
-                    enemyCount = spawner.GroupNumber / 7 + 1,
+                    enemyCount = Mathf.Min(spawner.GroupNumber / 5, 15),
                     enemyIndex = 2,
                 };
             }
@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviour
                 group= new Group
                 {
                     enemySpawnDelay = 1,
-                    enemyCount = spawner.GroupNumber * 5,
+                    enemyCount = Mathf.Min(spawner.GroupNumber * 5 + 10, 25),
                     enemyIndex = 0,
                 };
             }

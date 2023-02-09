@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.50980395}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.20392157}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 4
-  damage: 15
+  damage: 10
   fireRate: 1.2
   sprite: {fileID: 3162064934500849349}
   _hovered: 0
@@ -266,8 +266,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2412f39c8c124054bc81ae9cf278771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 15
-  attackRate: 1.2
+  damage: 10
+  attackRate: 1.5
 --- !u!114 &1412018191
 MonoBehaviour:
   m_ObjectHideFlags: 0
